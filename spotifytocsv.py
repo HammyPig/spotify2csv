@@ -1,10 +1,10 @@
-import sys
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
+
 
 class SpotifyToCsv:
     def _parse_song(track):
@@ -21,7 +21,7 @@ class SpotifyToCsv:
 
         return song
 
-    def parse(url):
+    def dict(url):
         # load page
         driver = webdriver.Firefox()
         driver.get(url)
@@ -61,20 +61,6 @@ class SpotifyToCsv:
             for i in range(2): actions.send_keys(Keys.ARROW_DOWN).perform()
             time.sleep(1)
         
+        driver.quit()
+
         return songs
-
-def main():
-    if len(sys.argv) != 2:
-        print("usage: python3 SpotifyToCsv.py <url>")
-        exit(1)
-
-    playlist_url = sys.argv[1]
-
-    if not playlist_url.startswith("https://open.spotify.com/playlist/"):
-        print("Please enter a url that starts with https://open.spotify.com/playlist/")
-
-    songs = SpotifyToCsv.parse(playlist_url)
-    print(songs)
-
-if __name__ == "__main__":
-    main()
