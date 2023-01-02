@@ -6,7 +6,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 
-class Spotify2Csv:
+class SpotifyToCsv:
     def _parse_song(track):
         song_info = track.find("div", {"aria-colindex": 2}).find("div")
 
@@ -49,7 +49,7 @@ class Spotify2Csv:
                 number = track.find("div", {"aria-colindex": 1}).text
 
                 if number not in songs:
-                    song = Spotify2Csv._parse_song(track)
+                    song = SpotifyToCsv._parse_song(track)
                     songs[number] = song
                     new_songs_found = True
             
@@ -65,7 +65,7 @@ class Spotify2Csv:
 
 def main():
     if len(sys.argv) != 2:
-        print("usage: python3 spotify2csv.py <url>")
+        print("usage: python3 SpotifyToCsv.py <url>")
         exit(1)
 
     playlist_url = sys.argv[1]
@@ -73,7 +73,7 @@ def main():
     if not playlist_url.startswith("https://open.spotify.com/playlist/"):
         print("Please enter a url that starts with https://open.spotify.com/playlist/")
 
-    songs = Spotify2Csv.parse(playlist_url)
+    songs = SpotifyToCsv.parse(playlist_url)
     print(songs)
 
 if __name__ == "__main__":
